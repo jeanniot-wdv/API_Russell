@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const userRoute = require('../routes/users');
+const catwayRoute = require('../routes/catways');
+const bookingRoute = require('../routes/bookings');
 
-//
+// Route principale de l'API
 router.get('/', async (req, res) => {
     res.status(200).json({
         name: process.env.APP_NAME ,
