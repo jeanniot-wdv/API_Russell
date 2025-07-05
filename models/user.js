@@ -31,6 +31,20 @@ const User = new Schema({
     }
 });
 
+// Middleware pour vérifier l'unicité de l'email avant de sauvegarder l'utilisateur
+User.pre('save', async function(next) {
+    try {
+        const existingUser = await mongoose.model('User').findOne({ email: this.email });
+        if (existingUser && existingUser._id.toString() !== this._id.toString()) {
+            return next(new Error('L\'email doit être unique'));
+        } else {
+            next();
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
 // Middleware pour hacher le mot de passe avant de sauvegarder l'utilisateur
 User.pre('save', async function(next) {
     if (this.isModified('password')) {
