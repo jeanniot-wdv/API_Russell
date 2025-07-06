@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const userRoute = require('../routes/users');
+const userRoute = require('../routes/users'); // Route pour les utilisateurs
+const catwayRoute = require('../routes/catways'); // Route pour les catways
+const bookingRoute = require('../routes/bookings'); // Route pour les réservations
 
 //
 router.get('/', async (req, res) => {
@@ -14,5 +16,8 @@ router.get('/', async (req, res) => {
 });
 
 router.use('/user', userRoute); // Route pour les utilisateurs
+router.use('/catway', catwayRoute); // Route pour les catways
+router.use('/catway/:catwayId/booking', bookingRoute); // Route pour les réservations
+
 
 module.exports = router;
