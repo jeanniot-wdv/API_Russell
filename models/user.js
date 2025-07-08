@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const uniqueValidator = require('mongoose-unique-validator'); // Pour valider l'unicité des champs
 const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 
 // Définition du schéma pour les utilisateurs
@@ -31,20 +32,6 @@ const User = new Schema({
     }
 });
 
-// Middleware pour vérifier l'unicité de l'email avant de sauvegarder l'utilisateur
-User.pre('save', async function(next) {
-    try {
-        const existingUser = await mongoose.model('User').findOne({ email: this.email });
-        if (existingUser && existingUser._id.toString() !== this._id.toString()) {
-            return next(new Error('L\'email doit être unique'));
-        } else {
-            next();
-        }
-    } catch (error) {
-        next(error);
-    }
-});
-
 // Middleware pour hacher le mot de passe avant de sauvegarder l'utilisateur
 User.pre('save', async function(next) {
     if (this.isModified('password')) {
@@ -58,5 +45,7 @@ User.pre('save', async function(next) {
         next();
     }
 });
+
+User.plugin(uniqueValidator, { message: 'L\'email doit être unique.' }); // Utilisation du plugin pour valider l'unicité
 
 module.exports = mongoose.model('User', User); // Exportation du modèle User

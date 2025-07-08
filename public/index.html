@@ -1,13 +1,47 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="description" content="Application de gestion du Port de Plaisance Russell">
+  <meta name="keywords" content="port, plaisance, gestion, application, Russell">
+  <meta name="author" content="Port de Plaisance Russell">
+  <meta name="theme-color" content="#3498db">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="/javascripts/script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <h1>Port de Plaisance Russell</h1>
-  <p>Bienvenue sur notre application de gestion</p>
-</body>
+  <h2>Bienvenue sur notre application de gestion</h2>
 
+  <p>Connectez-vous pour accéder à votre compte</p>
+  <form action="/dashboard" method="post">
+    <div class="form-group">
+      <label for="username">Nom d'utilisateur :</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Se connecter</button>
+  </form>
+  <p>Pas encore inscrit ? <a href="/register">Inscrivez-vous ici</a></p>
+  <p><a href="/forgot-password">Mot de passe oublié ?</a></p>
+
+  <footer>
+    <p>&copy; 2025 Port de Plaisance Russell</p>
+  </footer>
+
+</body>
 </html>

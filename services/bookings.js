@@ -83,12 +83,3 @@ exports.checkCatwayAvailability = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la vérification de la disponibilité de la passerelle', error });
     }
 }
-// Fonction pour lister toutes les réservations
-exports.listBookings = async (req, res) => {
-    try {
-        const bookings = await Booking.find();
-        res.status(200).json(bookings);
-    } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la récupération des réservations', error });
-    }
-} 
