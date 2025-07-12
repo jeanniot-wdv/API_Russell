@@ -6,6 +6,7 @@ const catwayRoute = require('../routes/catways'); // Route pour les catways
 const bookingRoute = require('../routes/bookings'); // Route pour les réservations
 const dashboardRoute = require('../routes/dashboard'); // Route pour le tableau de bord
 
+// Route pour la page d'accueil
 router.get('/', async (req, res) => {
     //res.status(200).json({
     res.render('home', {
