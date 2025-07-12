@@ -1,19 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-<<<<<<< HEAD
-const userRoute = require('../routes/users');
-const catwayRoute = require('../routes/catways');
-const bookingRoute = require('../routes/bookings');
-
-// Route principale de l'API
-=======
 const userRoute = require('../routes/users'); // Route pour les utilisateurs
 const catwayRoute = require('../routes/catways'); // Route pour les catways
 const bookingRoute = require('../routes/bookings'); // Route pour les réservations
 const dashboardRoute = require('../routes/dashboard'); // Route pour le tableau de bord
 
->>>>>>> develop
 router.get('/', async (req, res) => {
     //res.status(200).json({
     res.render('home', {
