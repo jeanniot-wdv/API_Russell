@@ -1,5 +1,6 @@
 // On importe les dépendances nécessaires
 const User = require('../models/user'); // Modèle User pour interagir avec la base de données
+const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 
 exports.getUserById = async (req, res) => {
     try {
@@ -15,8 +16,16 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
     try {
         const newUser = new User(req.body);
-        await newUser.save();
-        res.status(201).json(newUser);
+        const existingUser = await User.findOne({ email: newUser.email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Un utilisateur avec cet email existe déjà' });
+        }
+        // Hachage du mot de passe avant de sauvegarder l'utilisateur
+        const hashedPassword = await bcrypt.hash(newUser.password, 10);
+        newUser.password = hashedPassword; // On remplace le mot de passe en clair par le mot de passe haché
+        await newUser.save(); // Sauvegarde de l'utilisateur dans la base de données
+        //res.status(201).json(newUser); // Réponse avec le nouvel utilisateur créé
+        res.redirect('/'); // Redirection vers la page d'accueil après la création de l'utilisateur
     } catch (error) {
         res.status(400).json({ message: 'Erreur lors de la création de l\'utilisateur', error });
     }
