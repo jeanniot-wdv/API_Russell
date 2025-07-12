@@ -23,9 +23,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public'))); // Dossier public pour les fichiers statiques
+app.set('view engine', 'ejs'); // Moteur de rendu des vues EJS
+app.set('views', path.join(__dirname, 'views')); // Dossier des vues
 
 app.use('/', indexRouter); // Route principale de l'application
+app.use(express.static(path.join(__dirname, 'public'))); // Dossier public pour les fichiers statiques
+
+
 
 // Gestion des erreurs 404
 app.use((req, res, next) => {

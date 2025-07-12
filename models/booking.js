@@ -9,7 +9,7 @@ const Booking = new Schema({
         required: [true, 'Le numéro de la passerelle est requis'],
         true: true
     },
-    userName: {
+    clientName: {
         type: String,
         required: [true, 'Le nom de l\'utilisateur est requis'],
         trim: true

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const uniqueValidator = require('mongoose-unique-validator'); // Pour valider l'unicité des champs
 const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 
 // Définition du schéma pour les utilisateurs
@@ -44,5 +45,7 @@ User.pre('save', async function(next) {
         next();
     }
 });
+
+User.plugin(uniqueValidator, { message: 'L\'email doit être unique.' }); // Utilisation du plugin pour valider l'unicité
 
 module.exports = mongoose.model('User', User); // Exportation du modèle User
