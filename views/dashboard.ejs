@@ -1,32 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-  <meta name="description" content="Application de gestion du Port de Plaisance Russell">
-  <meta name="keywords" content="port, plaisance, gestion, application, Russell">
-  <meta name="author" content="Port de Plaisance Russell">
-  <meta name="theme-color" content="#3498db">
-  <meta name="robots" content="index, follow">
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="/javascripts/script.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <%- include('partials/head') %>
+  <title>Tableau de bord</title>
 </head>
-
 <body>
-  <h1>Port de Plaisance Russell</h1>
-  <h2>Tableau de bord</h2>
+  <%- include('partials/navbar') %>
 
-  <footer>
-    <p>&copy; 2025 Port de Plaisance Russell</p>
-  </footer>
+  <h1>Tableau de bord</h1>
 
+  <ul>
+    <li><a href="/catways">Gestion des catways</a></li>
+    <li><a href="/users">Utilisateurs</a></li>
+    <li><a href="/logout">Se déconnecter</a></li>
+  </ul>
+
+  <%- include('partials/footer') %>
 </body>
 </html>

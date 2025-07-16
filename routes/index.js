@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userRoute = require('../routes/users'); // Route pour les utilisateurs
-const catwayRoute = require('../routes/catways'); // Route pour les catways
+const apiCatwayRoute = require('../routes/api/catways'); // Route pour les catways
 const bookingRoute = require('../routes/bookings'); // Route pour les réservations
 const dashboardRoute = require('../routes/dashboard'); // Route pour le tableau de bord
 
@@ -27,10 +27,13 @@ router.post('/dashboard', (req, res) => {
 });
 
 router.get('/register', (req, res) => {res.render('register')});
+router.get('/login', (req, res) => {res.render('login')});
+router.get('/dashboard', (req, res) => {res.render('dashboard')});
+router.get('/catways', (req, res) => {res.render('catways')});
 
-router.use('/user', userRoute); // Route pour les utilisateurs
-router.use('/catway', catwayRoute); // Route pour les catways
-router.use('/catway/:catwayId/booking', bookingRoute); // Route pour les réservations
+router.use('/users', userRoute); // Route pour les utilisateurs
+router.use('/api/catways', apiCatwayRoute); // Route pour les catways
+router.use('/catways/:catwayId/bookings', bookingRoute); // Route pour les réservations
 router.use('/dashboard', dashboardRoute); // Route pour le tableau de bord
 
 

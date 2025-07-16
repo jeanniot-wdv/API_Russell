@@ -29,8 +29,6 @@ app.set('views', path.join(__dirname, 'views')); // Dossier des vues
 app.use('/', indexRouter); // Route principale de l'application
 app.use(express.static(path.join(__dirname, 'public'))); // Dossier public pour les fichiers statiques
 
-
-
 // Gestion des erreurs 404
 app.use((req, res, next) => {
     res.status(404).json({name: 'Erreur API', version: '1.0.0', status: 404, message: 'La ressource demandée n\'existe pas.'});

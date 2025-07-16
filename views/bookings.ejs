@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/head') %>
+  <title>Réservations</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <h1>Liste des Réservations</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Catway</th>
+        <th>Début</th>
+        <th>Fin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% bookings.forEach(booking => { %>
+        <tr>
+          <td><%= booking.clientName %></td>
+          <td><%= booking.catwayNumber %></td>
+          <td><%= booking.startDate.toLocaleDateString() %></td>
+          <td><%= booking.endDate.toLocaleDateString() %></td>
+          <td>
+            <a href="/bookings/<%= booking._id %>">Voir</a>
+            <a href="/bookings/<%= booking._id %>/edit">Modifier</a>
+            <form method="post" action="/bookings/<%= booking._id %>?_method=DELETE">
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <a href="/bookings/new">Nouvelle réservation</a>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
