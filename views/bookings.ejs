@@ -7,38 +7,15 @@
 <body>
   <%- include('partials/navbar') %>
 
-  <h1>Liste des Réservations</h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Client</th>
-        <th>Catway</th>
-        <th>Début</th>
-        <th>Fin</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% bookings.forEach(booking => { %>
-        <tr>
-          <td><%= booking.clientName %></td>
-          <td><%= booking.catwayNumber %></td>
-          <td><%= booking.startDate.toLocaleDateString() %></td>
-          <td><%= booking.endDate.toLocaleDateString() %></td>
-          <td>
-            <a href="/bookings/<%= booking._id %>">Voir</a>
-            <a href="/bookings/<%= booking._id %>/edit">Modifier</a>
-            <form method="post" action="/bookings/<%= booking._id %>?_method=DELETE">
-              <button type="submit">Supprimer</button>
-            </form>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-
-  <a href="/bookings/new">Nouvelle réservation</a>
+<h1>Gestion des Réservations</h1>
+<form class="detail-form" action="" method="POST">
+  <h3>Modifier cette réservation :</h3>
+  <input type="text" name="clientName" value="<%= booking.clientName %>" required><br>
+  <input type="text" name="boatName" value="<%= booking.boatName %>" required><br>
+  <input type="date" name="startDate" value="<%= new Date(booking.startDate).toISOString().split('T')[0] %>" required><br>
+  <input type="date" name="endDate" value="<%= new Date(booking.endDate).toISOString().split('T')[0] %>" required><br>
+  <button type="submit">Modifier</button>
+</form>
 
   <%- include('partials/footer') %>
 </body>

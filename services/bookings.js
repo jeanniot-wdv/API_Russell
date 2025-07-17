@@ -2,84 +2,63 @@
 const Booking = require('../models/booking');
 const Catway = require('../models/catway');
 
-// Fonction pour obtenir toutes les réservations
+// Fonction pour récupérer toutes les réservations d'un catway
 exports.getAllBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find();
-        res.status(200).json(bookings);
+        const catwayNumber = req.params.catwayId; // Récupérer l'ID du catway depuis les paramètres de la route
+        const bookings = await Booking.find({ catway: catwayNumber }).populate('catway'); // Récupérer les réservations associées à ce catway
+        if (!bookings) {
+            return res.status(404).json({ message: 'No bookings found for this catway' });
+        }
+        res.render('catway-show', { bookings, catwayNumber }); // Rendre la vue avec les réservations et le numéro du catway
     } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la récupération des réservations', error });
+        res.status(500).json({ message: 'Error retrieving bookings', error });
     }
-}
-
+};
+// Fonction pour récupérer une réservation par son ID
 exports.getBookingById = async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id);
         if (!booking) {
-            return res.status(404).json({ message: 'Réservation non trouvée' });
+            return res.status(404).json({ message: 'Booking not found' });
         }
-        res.status(200).json(booking);
+        res.render('bookings', { booking });
     } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la récupération de la réservation', error });
+        res.status(500).json({ message: 'Error retrieving booking', error });
     }
 }
 // Fonction pour créer une nouvelle réservation
 exports.createBooking = async (req, res) => {
     try {
         const newBooking = new Booking(req.body);
+        newBooking.catway = req.params.catwayId; // Associer la réservation au catway
         await newBooking.save();
-        res.status(201).json(newBooking);
+        res.redirect(`/catways/${req.params.catwayId}/bookings/${newBooking._id}`); // Redirection vers la page de la réservation créée
     } catch (error) {
-        res.status(400).json({ message: 'Erreur lors de la création de la réservation', error });
+        res.status(400).json({ message: 'Error creating booking', error });
     }
 }
+// Fonction pour mettre à jour une réservation existante
 exports.updateBooking = async (req, res) => {
     try {
-        const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!booking) {
-            return res.status(404).json({ message: 'Réservation non trouvée' });
+        const updatedBooking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedBooking) {
+            return res.status(404).json({ message: 'Booking not found' });
         }
-        res.status(200).json(booking);
+        res.redirect(`/catways/${req.params.catwayId}/bookings/${updatedBooking._id}`); // Redirection vers la page de la réservation mise à jour
     } catch (error) {
-        res.status(400).json({ message: 'Erreur lors de la mise à jour de la réservation', error });
+        res.status(400).json({ message: 'Error updating booking', error });
     }
 }
-
+// Fonction pour supprimer une réservation par son ID
 exports.deleteBooking = async (req, res) => {
     try {
-        const booking = await Booking.findByIdAndDelete(req.params.id);
-        if (!booking) {
-            return res.status(404).json({ message: 'Réservation non trouvée' });
+        const deletedBooking = await Booking.findByIdAndDelete(req.params.id);
+        if (!deletedBooking) {
+            return res.status(404).json({ message: 'Booking not found' });
         }
-        res.status(200).json({ message: 'Réservation supprimée avec succès' });
+        res.redirect(`/catways/${req.params.catwayId}`); // Redirection vers la liste des réservations du catway
     } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la suppression de la réservation', error });
-    }
-}
-
-// Fonction pour vérifier la disponibilité d'une passerelle
-exports.checkCatwayAvailability = async (req, res) => {
-    try {
-        const { catwayNumber, startDate, endDate } = req.body;
-
-        // Vérifier si la passerelle existe
-        const catwayExists = await Catway.findOne({ catwayNumber });
-        if (!catwayExists) {
-            return res.status(404).json({ message: 'La passerelle n\'existe pas' });
-        }
-        // Vérifier si la passerelle est déjà réservée pour les dates spécifiées
-        const existingBooking = await Booking.findOne({
-            catwayNumber,
-            $or: [
-                { startDate: { $lt: endDate, $gt: startDate } },
-                { endDate: { $gt: startDate, $lt: endDate } }
-            ]
-        });
-        if (existingBooking) {
-            return res.status(400).json({ message: 'La passerelle est déjà réservée pour ces dates' });
-        }
-        res.status(200).json({ message: 'La passerelle est disponible pour les dates spécifiées' });
-    } catch (error) {
-        res.status(500).json({ message: 'Erreur lors de la vérification de la disponibilité de la passerelle', error });
+        res.status(500).json({ message: 'Error deleting booking', error });
     }
 }

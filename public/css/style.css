@@ -96,5 +96,64 @@ th {
   background-color: #f2f2f2;
 }
 tr:hover {
-  background-color: #f5f5f5;
+  background-color: #c4e1fa;
+}
+.detail-form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.detail-form input[type="text"],
+.detail-form input[type="number"] {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.detail-form input[type="text"]:last-child,
+.detail-form input[type="number"]:last-child {
+  margin-right: 0;
+}
+.detail-form button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.detail-form button:hover {
+  background-color: #2980b9;
+}
+
+#new-catway-form {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#new-catway-form input[type="text"],
+#new-catway-form input[type="number"] {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+  padding: 8px; 
+  box-sizing: border-box;
+}
+#new-catway-form input[type="text"]:last-child,
+#new-catway-form input[type="number"]:last-child {
+  margin-right: 0;
+}
+#new-catway-form button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#new-catway-form button:hover {
+  background-color: #2980b9;
 }

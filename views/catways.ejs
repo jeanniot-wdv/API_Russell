@@ -7,103 +7,45 @@
 <body>
   <%- include('partials/navbar') %>
 
-  <h1>Liste des Catways</h1>
+<h1>Gestion des Catways</h1>
+<form id="new-catway-form" action="/catways" method="POST">
+    <label>Numéro du Catway:</label><br>
+    <input type="text" name="catwayNumber" required><br>
 
-  <table id="catwayTable">
+    <label>Type:</label><br>
+    <input type="text" name="catwayType" required><br>
+
+    <label>État:</label><br>
+    <input type="text" name="catwayState" required><br>
+
+    <button type="submit">Créer</button>
+  </form>
+
+<h2>Liste des Catways</h2>
+
+  <table>
     <thead>
       <tr>
         <th>Numéro</th>
         <th>Longueur</th>
         <th>État</th>
-        <th>Actions</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-
-      
+      <% catways.forEach(c => { %>
+        <tr onclick="window.location.href='/catways/<%= c._id %>'">
+          <td><%= c.catwayNumber %></td>
+          <td><%= c.catwayType %></td>
+          <td><%= c.catwayState %></td>
+          <td class="actions">
+            <a href="/catways/<%= c._id %>"><button>Voir</button></a>
+          </td>
+        </tr>
+      <% }) %>
     </tbody>
   </table>
 
-  <a href="/catways/new">Ajouter un catway</a>
-
   <%- include('partials/footer') %>
-
-  <!-- Script de chargement JS -->
-  <script>
-    async function loadCatways() {
-      try {
-        const res = await fetch('/api/catways/'); // Assure-toi que cette route existe
-        const catways = await res.json();
-
-        const tbody = document.querySelector('#catwayTable tbody');
-        tbody.innerHTML = ''; // Clear table before loading
-
-        catways.forEach(c => {
-          const row = document.createElement('tr');
-          console.log(c); // Debugging line to check catway data
-          row.innerHTML = `
-            <td>${c.catwayNumber}</td>
-            <td>${c.catwayType}</td>
-            <td>${c.catwayState}</td>
-            <td>
-              <button onclick="showCatway('${c._id}')">Voir</button>
-              <button onclick="modifyCatway('${c._id}')">Modifier</button>
-              <button onclick="deleteCatway('${c._id}')">Supprimer</button>
-            </td>
-          `;
-          tbody.appendChild(row);
-        });
-      } catch (err) {
-        console.error('Erreur de chargement des catways:', err);
-      }
-    }
-
-    async function deleteCatway(id) {
-      if (!confirm('Confirmer la suppression ?')) return;
-
-      const res = await fetch(`/api/catways/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        loadCatways(); // Rafraîchit la table
-      } else {
-        alert('Erreur lors de la suppression');
-      }
-    }
-    async function showCatway(id) {
-      const res = await fetch(`/api/catways/${id}`);
-      const catway = await res.json();
-      alert(`Catway: ${catway.catwayNumber}, Type: ${catway.catwayType}, État: ${catway.catwayState}`);
-    }
-    async function modifyCatway(id) {
-      const newNumber = prompt('Nouveau numéro de catway:');
-      const newType = prompt('Nouveau type de catway:');
-      const newState = prompt('Nouvel état de catway:');
-      if (!newNumber || !newType || !newState) {
-        alert('Modification annulée');
-        return;
-      }
-      const res = await fetch(`/api/catways/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          catwayNumber: newNumber,
-          catwayType: newType,
-          catwayState: newState,
-        }),
-      });
-      if (res.ok) {
-        loadCatways(); // Rafraîchit la table
-      } else {
-        alert('Erreur lors de la modification');
-      }
-    }
-    
-    // Charge les catways dès que la page est prête
-    window.addEventListener('DOMContentLoaded', loadCatways);
-  </script>
 </body>
 </html>

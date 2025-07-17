@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/head') %>
+  <title>Détail du Catway</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <h1>Catway numéro : <%= catway.catwayNumber %></h1>
+
+  <p><strong>Numéro :</strong> <%= catway.catwayNumber %></p>
+  <p><strong>Type :</strong> <%= catway.catwayType %></p>
+  <p><strong>État :</strong> <%= catway.catwayState %></p>
+
+  <h2>Réservations associées</h2>
+
+<% if (bookings.length > 0) { %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Bateau</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% bookings.forEach(b => { %>
+        <tr>
+          <td><%= b.clientName %></td>
+          <td><%= b.boatName %></td>
+          <td><%= new Date(b.startDate).toLocaleDateString('fr-FR') %></td>
+          <td><%= new Date(b.endDate).toLocaleDateString('fr-FR') %></td>
+          <td class="actions">
+            <a href="/catways/<%= catway._id %>/bookings/<%= b._id %>"><button>Voir</button></a>
+            <form action="/catways/<%= catway._id %>/bookings/<%= b._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>Aucune réservation pour ce catway.</p>
+<% } %>
+
+
+  <form class="detail-form" action="/catways/<%= catway._id %>?_method=PUT" method="POST">
+    <h3>Modifier ce catway :</h3>
+    <input type="text" name="catwayNumber" value="<%= catway.catwayNumber %>" required><br>
+    <input type="text" name="catwayType" value="<%= catway.catwayType %>" required><br>
+    <input type="text" name="catwayState" value="<%= catway.catwayState %>" required><br>
+    <button type="submit">Modifier</button>
+  </form>
+
+  // Formulaire pour ajouter une réservation
+  <form action="/catways/<%= catway._id %>/bookings" method="POST">
+    <h3>Ajouter une réservation :</h3>
+    <label>Nom du client :</label><br>
+    <input type="text" name="clientName" required><br>
+    <label>Nom du bateau :</label><br>
+    <input type="text" name="boatName" required><br>
+    <label>Date de début :</label><br>
+    <input type="date" name="startDate" required><br>
+    <label>Date de fin :</label><br>
+    <input type="date" name="endDate" required><br>
+    <button type="submit">Ajouter</button>
+  </form>
+
+  <form action="/catways/<%= catway._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+    <button type="submit">Supprimer</button>
+  </form>
+
+  <a href="/catways"><button>Retour à la liste</button></a>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

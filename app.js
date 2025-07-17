@@ -20,8 +20,12 @@ app.use(cors({
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true })); // Middleware pour parser les données du corps de la requête
 app.use(cookieParser());
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
 
 app.set('view engine', 'ejs'); // Moteur de rendu des vues EJS
 app.set('views', path.join(__dirname, 'views')); // Dossier des vues

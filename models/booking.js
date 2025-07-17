@@ -1,13 +1,17 @@
-const mangoose = require('mongoose');
+const mongoose = require('mongoose');
 const catway = require('./catway');
-const Schema = mangoose.Schema;
+const Schema = mongoose.Schema;
 
 // Définition du schéma pour les réservations
 const Booking = new Schema({
-    catwayNumber: {
+    /* catwayNumber: {
         type: Number,
         required: [true, 'Le numéro de la passerelle est requis'],
         true: true
+    }, */
+    catway: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Catway'
     },
     clientName: {
         type: String,
@@ -70,4 +74,4 @@ Booking.pre('save', async function(next) {
     }
 });
 
-module.exports = mangoose.model('Booking', Booking); // Exportation du modèle Booking
+module.exports = mongoose.model('Booking', Booking); // Exportation du modèle Booking
