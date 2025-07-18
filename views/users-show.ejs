@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/head') %>
+  <title>Détail d'un utilisateur</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <h1><%= user.name %> <%= user.firstname %></h1>
+  <form id="edit-user-form" action="/users/<%= user._id %>?_method=PUT" method="POST">
+    <label>Nom :</label><br>
+    <input type="text" name="name" value="<%= user.name %>" required><br>
+
+    <label>Prénom :</label><br>
+    <input type="text" name="firstname" value="<%= user.firstname %>"><br>
+
+    <label>Email :</label><br>
+    <input type="email" name="email" value="<%= user.email %>" required><br>
+
+    <button type="submit">Modifier</button>
+  </form>
+    <form id="delete-user-form" action="/users/<%= user._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+        <button type="submit">Supprimer</button>
+    </form>
+    <a href="/users"><button>Retour à la liste</button></a>
+
+
+    <h2>Informations de l'utilisateur</h2>
+    <p><strong>ID :</strong> <%= user._id %></p>
+    <p><strong>Email :</strong> <%= user.email %></p>
+    <p><strong>Créé le :</strong> <%= user.createdAt.toLocaleDateString() %> à <%= user.createdAt.toLocaleTimeString() %></p>
+
+
+  <%- include('partials/footer') %>
+</body>
+</html>

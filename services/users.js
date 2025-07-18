@@ -18,7 +18,8 @@ exports.getUserById = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur non trouvé' });
         }
-        res.status(200).json(user);
+        res.render('users-show', { user }); // Rendu de la vue 'users-show' avec les détails de l'utilisateur
+        // res.status(200).json(user); // Si on veut renvoyer l'utilisateur
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération de l\'utilisateur', error });
     }
@@ -57,7 +58,7 @@ exports.deleteUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'Utilisateur non trouvé' });
         }
-        res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+        res.redirect('/users/'); // Redirection vers la page d'accueil après la suppression de l'utilisateur
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la suppression de l\'utilisateur', error });
     }

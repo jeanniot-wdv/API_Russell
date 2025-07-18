@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 const User = new Schema({
     name: {
         type: String,
+        unique: true,
         required: [true, 'Le nom est requis'],
         trim: true
     },
@@ -45,6 +46,10 @@ User.pre('save', async function(next) {
         next();
     }
 });
+
+User.methods.comparePassword = function(password) {
+    return bcrypt.compare(password, this.password); // Comparaison du mot de passe candidat avec le mot de passe haché
+};
 
 User.plugin(uniqueValidator, { message: 'L\'email doit être unique.' }); // Utilisation du plugin pour valider l'unicité
 
