@@ -4,14 +4,10 @@ const Schema = mongoose.Schema;
 
 // Définition du schéma pour les réservations
 const Booking = new Schema({
-    /* catwayNumber: {
+    catwayNumber: {
         type: Number,
         required: [true, 'Le numéro de la passerelle est requis'],
         true: true
-    }, */
-    catway: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Catway'
     },
     clientName: {
         type: String,
@@ -48,30 +44,5 @@ const Booking = new Schema({
 });
 
 // Middleware pour vérifier la disponibilité de la passerelle avant de sauvegarder la réservation
-Booking.pre('save', async function(next) {
-    try {
-        const catwayExists = await catway.findOne({ catwayNumber: this.catwayNumber });
-        if (!catwayExists) {
-            return next(new Error('La passerelle n\'existe pas'));
-        }
-        
-        // Vérifier si la passerelle est déjà réservée pour les dates spécifiées
-        const existingBooking = await Booking.findOne({
-            catwayNumber: this.catwayNumber,
-            $or: [
-                { startDate: { $lt: this.endDate, $gt: this.startDate } },
-                { endDate: { $gt: this.startDate, $lt: this.endDate } }
-            ]
-        });
-
-        if (existingBooking) {
-            return next(new Error('La passerelle est déjà réservée pour ces dates'));
-        }
-
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
 
 module.exports = mongoose.model('Booking', Booking); // Exportation du modèle Booking

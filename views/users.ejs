@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/head') %>
+  <title>Utilisateurs</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+<h1>Gestion des utilisateurs</h1>
+<form id="new-user-form" action="/users" method="POST">
+    <label>Nom :</label><br>
+    <input type="text" name="name" required><br>
+
+    <label>Prénom :</label><br>
+    <input type="text" name="firstname"><br>
+
+    <label>Email :</label><br>
+    <input type="email" name="email" required><br>
+
+    <label>Mot de passe :</label><br>
+    <input type="password" name="password" required><br>
+
+    <button type="submit">Créer</button>
+</form>
+
+<h2>Liste des utilisateurs</h2>
+<table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr onclick="window.location.href='/users/<%= user._id %>'">
+          <td><%= user.name %></td>
+          <td><%= user.firstname %></td>
+          <td><%= user.email %></td>
+          <td class="actions">
+            <a href="/users/<%= user._id %>"><button>Voir</button></a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  <%- include('partials/footer') %>
+</body>
+</html>

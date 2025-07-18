@@ -57,9 +57,10 @@
     <button type="submit">Modifier</button>
   </form>
 
-  // Formulaire pour ajouter une réservation
   <form action="/catways/<%= catway._id %>/bookings" method="POST">
     <h3>Ajouter une réservation :</h3>
+    <input type="hidden" name="catwayNumber" value="<%= catway.catwayNumber %>">
+
     <label>Nom du client :</label><br>
     <input type="text" name="clientName" required><br>
     <label>Nom du bateau :</label><br>

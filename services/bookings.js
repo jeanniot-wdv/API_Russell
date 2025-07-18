@@ -18,11 +18,11 @@ exports.getAllBookings = async (req, res) => {
 // Fonction pour récupérer une réservation par son ID
 exports.getBookingById = async (req, res) => {
     try {
-        const booking = await Booking.findById(req.params.id);
+        const booking = await Booking.findById(req.params.id); // Récupérer la réservation par son ID et peupler le champ catway
         if (!booking) {
             return res.status(404).json({ message: 'Booking not found' });
         }
-        res.render('bookings', { booking });
+        res.render('bookings', { booking }); // Rendre la vue avec la réservation et le catway
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving booking', error });
     }
@@ -31,7 +31,6 @@ exports.getBookingById = async (req, res) => {
 exports.createBooking = async (req, res) => {
     try {
         const newBooking = new Booking(req.body);
-        newBooking.catway = req.params.catwayId; // Associer la réservation au catway
         await newBooking.save();
         res.redirect(`/catways/${req.params.catwayId}/bookings/${newBooking._id}`); // Redirection vers la page de la réservation créée
     } catch (error) {
