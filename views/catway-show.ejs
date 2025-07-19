@@ -2,81 +2,94 @@
 <html lang="fr">
 <head>
   <%- include('partials/head') %>
-  <title>Détail du Catway</title>
+  <title>Détail de la passerelle</title>
 </head>
 <body>
   <%- include('partials/navbar') %>
 
-  <h1>Catway numéro : <%= catway.catwayNumber %></h1>
+  <main class="container">
+    <h1 class="page-title">Passerelle n° <%= catway.catwayNumber %></h1>
 
-  <p><strong>Numéro :</strong> <%= catway.catwayNumber %></p>
-  <p><strong>Type :</strong> <%= catway.catwayType %></p>
-  <p><strong>État :</strong> <%= catway.catwayState %></p>
+    <section class="section-info">
+      <p><strong>Numéro :</strong> <%= catway.catwayNumber %></p>
+      <p><strong>Type :</strong> <%= catway.catwayType %></p>
+      <p><strong>État :</strong> <%= catway.catwayState %></p>
+    </section>
 
-  <h2>Réservations associées</h2>
+    <section class="section-table">
+      <h2>Réservations associées</h2>
 
-<% if (bookings.length > 0) { %>
+      <% if (bookings.length > 0) { %>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Utilisateur</th>
+              <th>Bateau</th>
+              <th>Date début</th>
+              <th>Date fin</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach(b => { %>
+              <tr>
+                <td><%= b.clientName %></td>
+                <td><%= b.boatName %></td>
+                <td><%= new Date(b.startDate).toLocaleDateString('fr-FR') %></td>
+                <td><%= new Date(b.endDate).toLocaleDateString('fr-FR') %></td>
+                <td class="actions">
+                  <a href="/catways/<%= catway._id %>/bookings/<%= b._id %>"><button class="btn-secondary">Voir</button></a>
+                  <form action="/catways/<%= catway._id %>/bookings/<%= b._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
+                    <button type="submit" class="btn btn-primary">Supprimer</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>Aucune réservation pour cette passerelle.</p>
+      <% } %>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Utilisateur</th>
-        <th>Bateau</th>
-        <th>Date début</th>
-        <th>Date fin</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% bookings.forEach(b => { %>
-        <tr>
-          <td><%= b.clientName %></td>
-          <td><%= b.boatName %></td>
-          <td><%= new Date(b.startDate).toLocaleDateString('fr-FR') %></td>
-          <td><%= new Date(b.endDate).toLocaleDateString('fr-FR') %></td>
-          <td class="actions">
-            <a href="/catways/<%= catway._id %>/bookings/<%= b._id %>"><button>Voir</button></a>
-            <form action="/catways/<%= catway._id %>/bookings/<%= b._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
-              <button type="submit">Supprimer</button>
-            </form>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-<% } else { %>
-  <p>Aucune réservation pour ce catway.</p>
-<% } %>
+    <section class="section-form">
+      <h3>Modifier cette passerelle</h3>
+      <form class="styled-form" action="/catways/<%= catway._id %>?_method=PUT" method="POST">
+        <input type="text" name="catwayNumber" value="<%= catway.catwayNumber %>" required>
+        <input type="text" name="catwayType" value="<%= catway.catwayType %>" required>
+        <input type="text" name="catwayState" value="<%= catway.catwayState %>" required>
+        <button type="submit" class="btn">Modifier</button>
+      </form>
+    </section>
 
+    <section class="section-form">
+      <h3>Ajouter une réservation</h3>
+      <form class="styled-form" action="/catways/<%= catway._id %>/bookings" method="POST">
+        <input type="hidden" name="catwayNumber" value="<%= catway.catwayNumber %>">
 
-  <form class="detail-form" action="/catways/<%= catway._id %>?_method=PUT" method="POST">
-    <h3>Modifier ce catway :</h3>
-    <input type="text" name="catwayNumber" value="<%= catway.catwayNumber %>" required><br>
-    <input type="text" name="catwayType" value="<%= catway.catwayType %>" required><br>
-    <input type="text" name="catwayState" value="<%= catway.catwayState %>" required><br>
-    <button type="submit">Modifier</button>
-  </form>
+        <label>Nom du client</label>
+        <input type="text" name="clientName" required>
 
-  <form action="/catways/<%= catway._id %>/bookings" method="POST">
-    <h3>Ajouter une réservation :</h3>
-    <input type="hidden" name="catwayNumber" value="<%= catway.catwayNumber %>">
+        <label>Nom du bateau</label>
+        <input type="text" name="boatName" required>
 
-    <label>Nom du client :</label><br>
-    <input type="text" name="clientName" required><br>
-    <label>Nom du bateau :</label><br>
-    <input type="text" name="boatName" required><br>
-    <label>Date de début :</label><br>
-    <input type="date" name="startDate" required><br>
-    <label>Date de fin :</label><br>
-    <input type="date" name="endDate" required><br>
-    <button type="submit">Ajouter</button>
-  </form>
+        <label>Date de début</label>
+        <input type="date" name="startDate" required>
 
-  <form action="/catways/<%= catway._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
-    <button type="submit">Supprimer</button>
-  </form>
+        <label>Date de fin</label>
+        <input type="date" name="endDate" required>
 
-  <a href="/catways"><button>Retour à la liste</button></a>
+        <button type="submit" class="btn">Ajouter</button>
+      </form>
+    </section>
+
+    <section class="section-form">
+      <form action="/catways/<%= catway._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+        <button type="submit" class="btn btn-danger">Supprimer la passerelle</button>
+      </form>
+      <a href="/catways" class="btn">Retour à la liste</a>
+    </section>
+  </main>
 
   <%- include('partials/footer') %>
 </body>

@@ -2,38 +2,57 @@
 <html lang="fr">
 <head>
   <%- include('partials/head') %>
-  <link rel="stylesheet" href="/css/style.css">
   <title>Accueil - Catways App</title>
 </head>
 <body>
   <%- include('partials/navbar', { user }) %>
 
-  <main class="home-container">
+  <main class="home-main">
+  <section class="hero">
     <h1>Bienvenue sur <span class="highlight">Catways App</span></h1>
-    <p>Gérez efficacement vos passerelles de port, les réservations de bateaux, et vos utilisateurs via une interface simple et moderne.</p>
+    <p class="tagline">La plateforme intelligente pour la gestion portuaire moderne.</p>
+  </section>
 
+  <section class="bloc-section">
     <% if (!user) { %>
       <div class="info-box">
-        <h3>Fonctionnalités disponibles après connexion :</h3>
+        <h2><i class="fas fa-unlock-alt"></i> Accès après connexion</h2>
         <ul>
-          <li>✔️ Voir et gérer les Catways</li>
-          <li>✔️ Créer et suivre les Réservations</li>
-          <li>✔️ Gérer les utilisateurs</li>
+          <li>Gérer les passerelles (Catways)</li>
+          <li>Créer et suivre les réservations</li>
+          <li>Administrer les utilisateurs</li>
         </ul>
-        <p>Connectez-vous pour accéder au tableau de bord.</p>
+        <p class="note">Créez un compte ou connectez-vous pour accéder au tableau de bord.</p>
       </div>
     <% } else { %>
       <div class="info-box success">
-        <p>Vous êtes connecté en tant que <strong><%= user.firstname %> <%= user.name %></strong>. Accédez au <a href="/dashboard">tableau de bord</a>.</p>
+        <p><i class="fas fa-user-check"></i> Connecté en tant que <strong><%= user.firstname %> <%= user.name %></strong>.</p>
+        <a href="/dashboard" class="btn-secondary"><i class="fas fa-tachometer-alt"></i> Accéder au tableau de bord</a>
       </div>
     <% } %>
-    <% if (!user) { %>
-  <div class="cta-container">
-    <a href="/register" class="btn-primary">Créer un compte utilisateur</a>
-  </div>
-<% } %>
 
-  </main>
+    <div class="info-box">
+      <h2><i class="fas fa-toolbox"></i> Pourquoi utiliser Catways App ?</h2>
+      <p>Notre solution vous permet de centraliser la gestion du port : de l'organisation des passerelles à la supervision des réservations et utilisateurs, tout est à portée de clic.</p>
+      <ul class="features-list">
+        <li><i class="fas fa-check-circle"></i> Interface intuitive et moderne</li>
+        <li><i class="fas fa-bolt"></i> Actions rapides et efficaces</li>
+        <li><i class="fas fa-lock"></i> Données sécurisées</li>
+      </ul>
+    </div>
+    
+    <div class="info-box cta-box">
+      <h2><i class="fas fa-user-plus"></i> Créer un compte</h2>
+      <p>Rejoignez Catways App et accédez à toutes les fonctionnalités dès maintenant !</p>
+      <a href="/register" class="btn-primary">
+        <i class="fas fa-user-plus"></i> Créer un compte
+      </a>
+      <p class="note">
+        Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+      </p>
+    </div>
+  </section>
+</main>
 
   <%- include('partials/footer') %>
 </body>

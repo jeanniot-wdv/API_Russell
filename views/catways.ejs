@@ -2,49 +2,61 @@
 <html lang="fr">
 <head>
   <%- include('partials/head') %>
-  <title>Catways</title>
+  <title>Gestion des Passerelles</title>
 </head>
 <body>
   <%- include('partials/navbar') %>
 
-<h1>Gestion des Catways</h1>
-<form id="new-catway-form" action="/catways" method="POST">
-    <label>Numéro du Catway:</label><br>
-    <input type="text" name="catwayNumber" required><br>
+  <main class="container">
+    <section class="hero">
+      <h1 class="page-title"><i class="fas fa-water"></i> Gestion des Passerelles</h1>
+      <p class="page-intro">Ajoutez, consultez et gérez les passerelles du port de plaisance Russell. Utilisez le formulaire ci-dessous pour en créer une nouvelle passerelle.</p>
+    </section>
 
-    <label>Type:</label><br>
-    <input type="text" name="catwayType" required><br>
+    <section class="form-section">
+      <form class="form" id="new-passerelle-form" action="/catways" method="POST">
+        <label for="passerelleNumber">Numéro de la passerelle :</label>
+        <input type="text" id="passerelleNumber" name="catwayNumber" required>
 
-    <label>État:</label><br>
-    <input type="text" name="catwayState" required><br>
+        <label for="passerelleType">Type :</label>
+        <input type="text" id="passerelleType" name="catwayType" required>
 
-    <button type="submit">Créer</button>
-  </form>
+        <label for="passerelleState">État :</label>
+        <input type="text" id="passerelleState" name="catwayState" required>
 
-<h2>Liste des Catways</h2>
+        <button type="submit" class="btn"><i class="fas fa-plus-circle"></i> Créer la passerelle</button>
+      </form>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Numéro</th>
-        <th>Longueur</th>
-        <th>État</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% catways.forEach(c => { %>
-        <tr onclick="window.location.href='/catways/<%= c._id %>'">
-          <td><%= c.catwayNumber %></td>
-          <td><%= c.catwayType %></td>
-          <td><%= c.catwayState %></td>
-          <td class="actions">
-            <a href="/catways/<%= c._id %>"><button>Voir</button></a>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
+    <section class="list-section">
+      <h2 class="section-title"><i class="fas fa-list"></i> Liste des Passerelles</h2>
+
+      <% if (catways.length > 0) { %>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-hashtag"></i> Numéro</th>
+              <th><i class="fas fa-tag"></i> Type</th>
+              <th><i class="fas fa-traffic-light"></i> État</th>
+              <th><i class="fas fa-cogs"></i> Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% catways.forEach(p => { %>
+              <tr onclick="window.location.href='/catways/<%= p._id %>'">
+                <td><%= p.catwayNumber %></td>
+                <td><%= p.catwayType %></td>
+                <td><%= p.catwayState %></td>
+                <td><a href="/catways/<%= p._id %>" class="btn-secondary"><i class="fas fa-eye"></i> Voir</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p>Aucune passerelle enregistrée pour le moment.</p>
+      <% } %>
+    </section>
+  </main>
 
   <%- include('partials/footer') %>
 </body>
