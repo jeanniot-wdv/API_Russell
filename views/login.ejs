@@ -9,7 +9,7 @@
 
   <h1>Connexion</h1>
   <% if (typeof error !== 'undefined') { %>
-    <p style="color: red;"><%= error %></p>
+    <p class="error" style="color: red;"><%= error %></p>
   <% } %>
   <form action="/login" method="post">
     <div>

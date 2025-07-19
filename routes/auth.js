@@ -7,7 +7,7 @@ const SECRET_KEY = 'votre_clé_secrète';
 
 // Afficher le formulaire d’inscription
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register', { user: req.user || null }); // Afficher le formulaire d'inscription
 });
 
 // Route pour l'inscription d'un nouvel utilisateur
@@ -35,7 +35,12 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Mot de passe incorrect' });
         }
         const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1h' });
-        res.status(200).json({ token, user: { id: user._id, name: user.name, email: user.email } });
+        res.cookie('token', token, {
+            httpOnly: true, 
+            maxAge: 3600000 // 1 heure
+            //secure: process.env.NODE_ENV === 'production'
+        });
+        res.redirect('/'); // Rediriger vers la page d'accueil après la connexion
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

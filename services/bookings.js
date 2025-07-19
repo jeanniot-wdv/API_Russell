@@ -22,7 +22,7 @@ exports.getBookingById = async (req, res) => {
         if (!booking) {
             return res.status(404).json({ message: 'Booking not found' });
         }
-        res.render('bookings', { booking }); // Rendre la vue avec la réservation et le catway
+        res.render('bookings', { booking, user: req.user }); // Rendre la vue avec la réservation et le catway
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving booking', error });
     }

@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <%- include('partials/head') %>
-  <title>Express</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Accueil - Catways App</title>
+</head>
 <body>
-  <%- include('partials/navbar') %>
-    
-  <h1>Port de Plaisance Russell</h1>
-  <h2>Bienvenue sur notre application de gestion</h2>
+  <%- include('partials/navbar', { user }) %>
 
-  <p>Connectez-vous pour accéder à votre compte</p>
-  <form action="/dashboard" method="post">
-    <div class="form-group">
-      <label for="username">Nom d'utilisateur :</label>
-      <input type="text" id="username" name="username" required>
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Se connecter</button>
-  </form>
-  <p><a href="/register">Créer un compte de gestion</a></p>
+  <main class="home-container">
+    <h1>Bienvenue sur <span class="highlight">Catways App</span></h1>
+    <p>Gérez efficacement vos passerelles de port, les réservations de bateaux, et vos utilisateurs via une interface simple et moderne.</p>
+
+    <% if (!user) { %>
+      <div class="info-box">
+        <h3>Fonctionnalités disponibles après connexion :</h3>
+        <ul>
+          <li>✔️ Voir et gérer les Catways</li>
+          <li>✔️ Créer et suivre les Réservations</li>
+          <li>✔️ Gérer les utilisateurs</li>
+        </ul>
+        <p>Connectez-vous pour accéder au tableau de bord.</p>
+      </div>
+    <% } else { %>
+      <div class="info-box success">
+        <p>Vous êtes connecté en tant que <strong><%= user.firstname %> <%= user.name %></strong>. Accédez au <a href="/dashboard">tableau de bord</a>.</p>
+      </div>
+    <% } %>
+    <% if (!user) { %>
+  <div class="cta-container">
+    <a href="/register" class="btn-primary">Créer un compte utilisateur</a>
+  </div>
+<% } %>
+
+  </main>
 
   <%- include('partials/footer') %>
-
 </body>
 </html>

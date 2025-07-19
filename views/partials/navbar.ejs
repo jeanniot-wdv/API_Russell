@@ -1,10 +1,24 @@
-<nav>
-  <ul>
-    <li><a href="/">Accueil</a></li>
-    <li><a href="/dashboard">Dashboard</a></li>
-    <li><a href="/bookings">Réservations</a></li>
-    <li><a href="/catways">Catways</a></li>
-    <li><a href="/users">Utilisateurs</a></li>
-    <li><a href="/logout">Se déconnecter</a></li>
-  </ul>
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/">Accueil</a>
+    <% if (user) { %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/catways">Catways</a>
+      <a href="/users">Utilisateurs</a>
+    <% } %>
+  </div>
+
+  <div class="nav-right">
+    <% if (user) { %>
+      <span class="user-info">Bienvenue <strong><%= user.firstname %> ! </strong></span>
+      <a href="/logout" class="btn-logout">Déconnexion</a>
+    <% } else { %>
+      <form action="/login" method="POST" class="login-form">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Mot de passe" required />
+        <button type="submit">Connexion</button>
+      </form>
+    <% } %>
+  </div>
 </nav>
+

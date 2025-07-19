@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const authRoutes = require('./routes/auth');
 const logger = require('morgan');
 const cors= require('cors');
 
@@ -30,6 +31,7 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs'); // Moteur de rendu des vues EJS
 app.set('views', path.join(__dirname, 'views')); // Dossier des vues
 
+app.use('/', authRoutes); // Routes d'authentification
 app.use('/', indexRouter); // Route principale de l'application
 app.use(express.static(path.join(__dirname, 'public'))); // Dossier public pour les fichiers statiques
 

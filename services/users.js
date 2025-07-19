@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find(); // Récupération de tous les utilisateurs
-        res.render('users', { users }); // Rendu de la vue 'users' avec la liste des utilisateurs
+        res.render('users', { users, user: req.user }); // Rendu de la vue 'users' avec la liste des utilisateurs
         // res.status(200).json(users); // Si on veut renvoyer les utilisateurs
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
