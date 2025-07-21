@@ -3,6 +3,8 @@ const router = express.Router();
 
 const service = require('../services/users');
 
+// La route pour obtenir tous les utilisateurs
+router.get('/', service.getAllUsers);
 // La route pour obtenir les informations d'un utilisateur par son ID
 router.get('/:id', service.getUserById);
 // La route pour créer un nouvel utilisateur

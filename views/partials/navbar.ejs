@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/">Accueil</a>
+    <% if (user) { %>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/catways">Catways</a>
+      <a href="/users">Utilisateurs</a>
+    <% } %>
+  </div>
+
+  <div class="nav-right">
+    <% if (user) { %>
+      <span class="user-info">Bienvenue <strong><%= user.firstname %> ! </strong></span>
+      <a href="/logout" class="btn-primary">Déconnexion</a>
+    <% } else { %>
+      <form action="/login" method="POST" class="login-form">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Mot de passe" required />
+        <button type="submit" class="btn-primary">Connexion</button>
+      </form>
+    <% } %>
+  </div>
+</nav>
+

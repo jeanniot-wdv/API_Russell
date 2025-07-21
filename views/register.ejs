@@ -1,53 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-  <meta name="description" content="Application de gestion du Port de Plaisance Russell">
-  <meta name="keywords" content="port, plaisance, gestion, application, Russell">
-  <meta name="author" content="Port de Plaisance Russell">
-  <meta name="theme-color" content="#3498db">
-  <meta name="robots" content="index, follow">
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="/javascripts/script.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <%- include('partials/head') %>
+  <title>Inscription</title>
 </head>
-
 <body>
-  <h1>Port de Plaisance Russell</h1>
-  <h2>Bienvenue sur notre application de gestion</h2>
+  <%- include('partials/navbar') %>
 
-  <p>Créer votre compte</p>
-  <form action="/user" method="post">
-    <div class="form-group">
-      <label for="name">Nom d'utilsateur :</label>
-      <input type="text" id="name" name="name" required>
-    </div>
-    <div class="form-group">
-      <label for="firstname">Prénom :</label>
-      <input type="text" id="firstname" name="firstname">
-    </div>
-    <div class="form-group">
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">S'inscrire</button>
-  </form>
+  <main>
+    <section>
+      <h1><i class="fas fa-user-plus"></i> Créer un compte</h1>
 
-  <footer>
-    <p>&copy; 2025 Port de Plaisance Russell</p>
-  </footer>
+      <form action="/users" method="POST">
+        <label for="name">Nom :</label>
+        <input type="text" name="name" required>
 
+        <label for="firstname">Prénom :</label>
+        <input type="text" name="firstname">
+
+        <label for="email">Email :</label>
+        <input type="email" name="email" required>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" name="password" required>
+
+        <button type="submit" class="btn-secondary"><i class="fas fa-user-plus"></i> S'inscrire</button>
+      </form>
+
+      <p>Déjà un compte ? <a href="/">Connectez-vous ici</a></p>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
 </body>
 </html>
