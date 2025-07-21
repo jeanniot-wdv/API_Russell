@@ -2,6 +2,10 @@
 const User = require('../models/user'); // Modèle User pour interagir avec la base de données
 const bcrypt = require('bcrypt'); // Pour le hachage des mots de passe
 
+function capitalize(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find(); // Récupération de tous les utilisateurs
@@ -11,7 +15,6 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
     }
 }
-
 exports.getUserById = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -31,9 +34,11 @@ exports.createUser = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'Un utilisateur avec cet email existe déjà' });
         }
+        newUser.firstname = capitalize(newUser.firstname);
+        newUser.name = capitalize(newUser.name);
         // Hachage du mot de passe avant de sauvegarder l'utilisateur
-        const hashedPassword = await bcrypt.hash(newUser.password, 10);
-        newUser.password = hashedPassword; // On remplace le mot de passe en clair par le mot de passe haché
+        //const hashedPassword = await bcrypt.hash(newUser.password, 10);
+        //newUser.password = hashedPassword; // On remplace le mot de passe en clair par le mot de passe haché
         await newUser.save(); // Sauvegarde de l'utilisateur dans la base de données
         //res.status(201).json(newUser); // Réponse avec le nouvel utilisateur créé
         res.redirect('/users/'); // Redirection vers la page d'accueil après la création de l'utilisateur
