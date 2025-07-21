@@ -12,27 +12,36 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 body {
-  background-color: var(--champagne-pink);
   color: #333;
   line-height: 1.6;
-  padding-top: 60px;
+  padding-top: 50px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-h1, h2, h3 {
+h1, h3 {
   color: var(--bright-pink-crayola);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+h2 {
+  color: var(--coral);
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+
+.logo {
+  font-family: 'Kaushan Script', cursive;
 }
 
 /* Navbar */
 .navbar {
   background-color: var(--robin-egg-blue);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   width: 100%;
@@ -44,15 +53,19 @@ h1, h2, h3 {
   z-index: 1000;
 }
 
+.nav-left .logo {
+  font-size: 1.5rem;
+  color: var(--bright-pink-crayola);
+}
+
 .navbar a {
   color: var(--white);
   text-decoration: none;
-  font-weight: bold;
   margin-right: 1rem;
   transition: color 0.3s;
 }
-.navbar a:hover {
-  color: var(--coral);
+.navbar .nav-left a:hover {
+  color: var(--dark-text);
 }
 
 .login-form {
@@ -72,7 +85,6 @@ h1, h2, h3 {
 
 /* Buttons */
 .btn, .btn-primary, .btn-secondary {
-  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
@@ -101,26 +113,60 @@ h1, h2, h3 {
 }
 
 /* Forms */
+.create-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  margin: auto;
+}
+.create-form label {
+  width: 200px;
+}
+.create-form input {
+  width: calc(100% - 220px);
+}
+.modify-form label {
+  width: 100px;
+}
+.modify-form input {
+  width: calc(100% - 120px);
+}
 form input, form select, form textarea {
   width: 100%;
   padding: 0.6rem;
-  margin: 0.5rem 0 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
-
-form button {
-  composes: btn-primary;
+.modify-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto 0.4rem;
 }
-
+.table-box {
+  width: 100%;
+  margin: auto;
+  border: 2px solid var(--champagne-pink);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  padding: 32px 24px;
+}
 /* Sections / Containers */
-main, section {
-  padding: 2rem;
-  background-color: var(--white);
-  margin: 2rem auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+main {
+  width: 80%;
   max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  margin: 2rem auto;
 }
 
 .hero {
@@ -128,40 +174,44 @@ main, section {
   margin-bottom: 2rem;
 }
 .hero h1 {
-  font-size: 2.4rem;
+  font-size: 2rem;
 }
-.tagline {
-  font-size: 1.2rem;
-  color: #666;
+.hero p {
+  display: inline-block;
+  width: 65%;
 }
 
 /* Info Boxes */
 .bloc-section {
+  width: 100%;
+  margin: auto;
   display: flex;
   justify-content: center;
   align-items: stretch;
   flex-wrap: wrap;
   gap: 32px;
 }
-
+.bloc {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+}
 .info-box {
-  background: var(--champagne-pink);
-  width: 320px;
-  min-height: 340px;
+  width: 31%;
+  background-color: var(--champagne-pink);
   border-radius: 16px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  padding: 32px 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:start;
+  justify-content: center;
 }
-
-.info-box.success {
-  border-left: 4px solid #20ba58;
-}
-.info-box h2 {
-  color: var(--dark-text);
-  font-weight: 600;
+.info-box:hover {
+  box-shadow: 0 4px 14px rgba(252, 140, 35, 0.757);
 }
 .info-box ul {
   list-style: none;
@@ -176,10 +226,12 @@ main, section {
   color: #888;
   margin-top: 1rem;
 }
-
-/* CTA */
-.cta-box .btn-primary {
-  margin: 20px 0;
+.cta-box .btn-primary,
+.info-box .btn-secondary {
+  margin: 20px auto;
+}
+.info-catway {
+  width: 60%;
 }
 
 /* Tables */
@@ -189,7 +241,7 @@ table {
   margin-top: 1rem;
 }
 th, td {
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: 1px solid #ddd;
   text-align: left;
 }

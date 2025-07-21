@@ -8,30 +8,30 @@
   <%- include('partials/navbar') %>
 
   <main>
-    <section>
+    <div class="hero">
       <h1><i class="fas fa-gauge"></i> Tableau de bord</h1>
       <p>Bienvenue sur votre espace de gestion. Utilisez les raccourcis ci-dessous pour naviguer rapidement.</p>
+    </div>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2rem;">
-        <div style="flex: 1; min-width: 250px;">
-          <h3><i class="fas fa-water"></i> Gestion des catways</h3>
-          <p>Ajoutez, modifiez ou supprimez les catways disponibles dans le port.</p>
+      <div class="bloc-section">
+         <div class="info-box">
+          <h2><i class="fas fa-water"></i> Gestion des passerelles</h2>
+          <p>Ajoutez, modifiez ou supprimez les passerelles disponibles dans le port.</p>
           <a href="/catways"><button class="btn-secondary"><i class="fas fa-arrow-right"></i> Accéder</button></a>
         </div>
 
-        <div style="flex: 1; min-width: 250px;">
-          <h3><i class="fas fa-user-group"></i> Gestion des utilisateurs</h3>
+         <div class="info-box">
+          <h2><i class="fas fa-user-group"></i> Gestion des utilisateurs</h2>
           <p>Consultez la liste des utilisateurs, modifiez leurs informations ou supprimez un compte.</p>
           <a href="/users"><button class="btn-secondary"><i class="fas fa-arrow-right"></i> Accéder</button></a>
         </div>
 
-        <div style="flex: 1; min-width: 250px;">
-          <h3><i class="fas fa-right-from-bracket"></i> Déconnexion</h3>
+         <div class="info-box cta-box">
+          <h2><i class="fas fa-right-from-bracket"></i> Déconnexion</h2>
           <p>Terminer votre session et revenir à la page d'accueil.</p>
           <a href="/logout"><button class="btn-primary"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button></a>
         </div>
       </div>
-    </section>
   </main>
 
   <%- include('partials/footer') %>
