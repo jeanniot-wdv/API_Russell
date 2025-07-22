@@ -38,7 +38,6 @@ router.post('/login', async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true, 
             maxAge: 3600000 // 1 heure
-            //secure: process.env.NODE_ENV === 'production'
         });
         res.redirect('/'); // Rediriger vers la page d'accueil après la connexion
     } catch (error) {

@@ -18,7 +18,7 @@
         <p><strong>État :</strong> <%= catway.catwayState %></p>
     
         <h3><i class="fas fa-edit"></i> Modifier/supprimer la passerelle n° <%= catway.catwayNumber %></h3>
-        <form class="modify-form" action="/catways/<%= catway._id %>?_method=PUT" method="POST">
+        <form class="modify-form" action="/api/catways/<%= catway._id %>?_method=PUT" method="POST">
           <label for="catwayNumber">Numéro de la passerelle :</label>
           <input type="text" name="catwayNumber" value="<%= catway.catwayNumber %>" required>
           <label for="catwayType">Type :</label>
@@ -27,13 +27,13 @@
           <input type="text" name="catwayState" value="<%= catway.catwayState %>" required>
           <button type="submit" class="btn-secondary">Modifier le passerelle</button>
         </form>
-        <form action="/catways/<%= catway._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
+        <form action="/api/catways/<%= catway._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');">
           <button type="submit" class="btn-primary">Supprimer la passerelle</button>
         </form>
       </div>
       <div class="info-box">
         <h3>Ajouter une réservation</h3>
-        <form class="styled-form" action="/catways/<%= catway._id %>/bookings" method="POST">
+        <form class="styled-form" action="/api/catways/<%= catway._id %>/bookings" method="POST">
           <input type="hidden" name="catwayNumber" value="<%= catway.catwayNumber %>">
 
           <label>Nom du client</label>
@@ -76,7 +76,7 @@
                 <td><%= new Date(b.endDate).toLocaleDateString('fr-FR') %></td>
                 <td class="actions">
                   <a href="/catways/<%= catway._id %>/bookings/<%= b._id %>"><button class="btn-secondary">Voir</button></a>
-                  <form action="/catways/<%= catway._id %>/bookings/<%= b._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
+                  <form action="/api/catways/<%= catway._id %>/bookings/<%= b._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
                     <button type="submit" class="btn btn-primary">Supprimer</button>
                   </form>
                 </td>

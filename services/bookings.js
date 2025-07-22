@@ -1,6 +1,5 @@
 
 const Booking = require('../models/booking');
-const Catway = require('../models/catway');
 
 // Fonction pour récupérer toutes les réservations d'un catway
 exports.getAllBookings = async (req, res) => {
@@ -10,7 +9,8 @@ exports.getAllBookings = async (req, res) => {
         if (!bookings) {
             return res.status(404).json({ message: 'No bookings found for this catway' });
         }
-        res.render('catway-show', { bookings, catwayNumber }); // Rendre la vue avec les réservations et le numéro du catway
+        res.status(200).render('bookings', { bookings, user: req.user }); // Rendre la vue avec les réservations et le catway
+        //res.render('catway-show', { bookings, catwayNumber }); // Rendre la vue avec les réservations et le numéro du catway
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving bookings', error });
     }
@@ -22,7 +22,8 @@ exports.getBookingById = async (req, res) => {
         if (!booking) {
             return res.status(404).json({ message: 'Booking not found' });
         }
-        res.render('bookings', { booking, user: req.user }); // Rendre la vue avec la réservation et le catway
+        res.status(200).render('booking-show', { booking, user: req.user }); // Rendre la vue avec les détails de la réservation
+        //res.render('bookings', { booking, user: req.user }); // Rendre la vue avec la réservation et le catway
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving booking', error });
     }
