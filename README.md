@@ -51,7 +51,7 @@ Créer un dossier `env` avec un fichier `.env` à la racine avec :
 
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/myport <--- votre liens vers mongoDb
+MONGODB_URI=mongodb://localhost:27017/myport <--- votre lien vers mongoDb
 SECRET_KEY=votre_clé_secrète
 ```
 
@@ -118,12 +118,6 @@ Les contributions sont les bienvenues ! Merci de :
 1. Créer une issue ou une pull request
 2. Suivre les bonnes pratiques Git (`feat/`, `fix/`, `refactor/`, etc.)
 3. Documenter clairement vos changements
-
----
-
-## 📝 Licence
-
-Ce projet est sous licence MIT.
 
 ---
 
