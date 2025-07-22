@@ -5,7 +5,7 @@ const Catway = require('../models/catway');
 exports.getAllCatways = async (req, res) => {
     try {
         const catways = await Catway.find();
-        res.render('catways', { catways, user: req.user || null }); // Afficher la liste des catways
+        res.status(200).json(catways); // Retourner la liste des catways
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving catways', error });
     }
@@ -18,7 +18,7 @@ exports.getCatwayById = async (req, res) => {
             return res.status(404).json({ message: 'Catway not found' });
         }
         const bookings = await Booking.find({ catwayNumber: catway.catwayNumber });
-        res.render('catway-show', { catway, bookings, user: req.user || null }); // Afficher les détails du catway avec ses réservations
+        res.status(200).json({ catway, bookings }); // Retourner le catway et ses réservations
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving catway', error });
     }

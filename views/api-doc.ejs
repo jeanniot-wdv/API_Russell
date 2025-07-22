@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <%- include('partials/head') %>
+  <title>Documentation API</title>
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+  <main>
+    <div class="hero">
+      <h1><i class="fas fa-book"></i> Documentation de l'API</h1>
+      <p>Cette documentation fournit les détails nécessaires pour interagir avec l'API de gestion des passerelles et des réservations. Toutes les requêtes doivent être envoyées au format JSON. L'authentification par token (JWT) est requise pour la plupart des routes.</p>
+    </div>
+
+    <div class="bloc-section">
+
+      <!-- Authentification -->
+      <div class="info-box">
+        <h2><i class="fas fa-key"></i> Authentification</h2>
+        <p>Ces routes permettent aux utilisateurs de s'enregistrer, se connecter et se déconnecter. Après connexion, un token JWT est généré et stocké dans un cookie sécurisé.</p>
+        <ul>
+          <li><strong>POST</strong> <code>/login</code> – Connexion avec <code>email</code> et <code>password</code></li>
+          <li><strong>POST</strong> <code>/register</code> – Inscription avec <code>name, firstname, email, password</code></li>
+          <li><strong>GET</strong> <code>/logout</code> – Supprime le token de session</li>
+        </ul>
+        <p class="note">Un token JWT valide est nécessaire pour accéder aux routes protégées.</p>
+      </div>
+
+      <!-- Utilisateurs -->
+      <div class="info-box">
+        <h2><i class="fas fa-user"></i> Utilisateurs</h2>
+        <p>Routes pour gérer les comptes utilisateurs (admin uniquement).</p>
+        <ul>
+          <li><strong>GET</strong> <code>/api/users</code> – Liste tous les utilisateurs</li>
+          <li><strong>GET</strong> <code>/api/users/:id</code> – Détails d’un utilisateur</li>
+          <li><strong>POST</strong> <code>/api/users</code> – Crée un utilisateur</li>
+          <li><strong>PUT</strong> <code>/api/users/:id</code> – Modifie un utilisateur</li>
+          <li><strong>DELETE</strong> <code>/api/users/:id</code> – Supprime un utilisateur</li>
+        </ul>
+        <p class="note">Les mots de passe sont automatiquement hachés avant enregistrement.</p>
+      </div>
+
+      <!-- Passerelles -->
+      <div class="info-box">
+        <h2><i class="fas fa-water"></i> Passerelles</h2>
+        <p>Les passerelles sont des emplacements physiques où les bateaux peuvent être amarrés.</p>
+        <ul>
+          <li><strong>GET</strong> <code>/api/catways</code> – Liste toutes les passerelles</li>
+          <li><strong>GET</strong> <code>/api/catways/:id</code> – Détails d'une passerelle</li>
+          <li><strong>POST</strong> <code>/api/catways</code> – Crée une nouvselle passerelle</li>
+          <li><strong>PUT</strong> <code>/api/catways:id</code> – Modifie une passerelle</li>
+          <li><strong>DELETE</strong> <code>/api/catways:id</code> – Supprime passerelle</li>
+        </ul>
+        <p class="note">Chaque passerelle possède un identifiant unique et un état de disponibilité.</p>
+      </div>
+
+      <!-- Réservations -->
+      <div class="info-box">
+        <h2><i class="fas fa-calendar-check"></i> Réservations</h2>
+        <p>Permet aux utilisateurs de réserver des emplacements de passerelle à une date donnée.</p>
+        <ul>
+          <li><strong>GET</strong> <code>/api/catways/:id/bookings</code> – Liste des réservations associées à une passerelle</li>
+          <li><strong>GET</strong> <code>/api/catways/:id/bookings/:id</code> – Détails d'une réservation</li>
+          <li><strong>POST</strong> <code>/api/catways/:id/bookings</code> – Crée une réservation (<code>user, catway, date</code>)</li>
+          <li><strong>PUT</strong> <code>/api/catways/:id/bookings</code> – Modifie une réservation (<code>user, catway, date</code>)</li>
+          <li><strong>DELETE</strong> <code>/api/catways/:id/bookings/:id</code> – Supprime une réservation</li>
+        </ul>
+        <p class="note">Les conflits de date ou de passerelle sont gérés automatiquement par l’API.</p>
+      </div>
+
+      <!-- Sécurité -->
+      <div class="info-box">
+        <h2><i class="fas fa-shield-alt"></i> Sécurité & Authentification</h2>
+        <p>L'accès aux routes est contrôlé par un middleware 'auth.js' ou 'authOptional.js'. Les tokens JWT doivent être envoyés via cookie ou en header <code>Authorization: Bearer &lt;token&gt;</code>.</p>
+        <ul>
+          <li>Les routes publiques ne nécessitent pas d'authentification</li>
+          <li>Les routes sensibles exigent un token valide</li>
+        </ul>
+        <p class="note">En cas d'expiration ou d'invalidité du token, l'utilisateur est automatiquement déconnecté.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
