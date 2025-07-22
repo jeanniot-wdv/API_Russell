@@ -47,7 +47,7 @@ npm install
 
 ### 🛠️ Configuration
 
-Créer un fichier `.env` à la racine avec :
+Créer un dossier `env` avec un fichier `.env` à la racine avec :
 
 ```env
 PORT=3000
