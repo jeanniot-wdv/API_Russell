@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const SECRET_KEY = 'votre_clé_secrète';
+
+const KEY = process.env.SECRET_KEY;
 
 // Middleware pour authentification optionnelle
 module.exports = async (req, res, next) => {
@@ -8,7 +9,7 @@ module.exports = async (req, res, next) => {
     if (!token) return next();
 
     try {
-        const decoded = jwt.verify(token, SECRET_KEY);
+        const decoded = jwt.verify(token, KEY);
         const user = await User.findById(decoded.id).select('-password');
         if (user) req.user = user;
     } catch (err) {

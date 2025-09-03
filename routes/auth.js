@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const router = express.Router();
-const SECRET_KEY = 'votre_clé_secrète';
+const KEY = process.env.SECRET_KEY;
+
 
 // Afficher le formulaire d’inscription
 router.get('/register', (req, res) => {
@@ -16,7 +17,9 @@ router.post('/register', async (req, res) => {
     try {
         const newUser = new User({ name, firstname, email, password });
         await newUser.save();
-        res.status(201).json({ message: 'Utilisateur créé avec succès' });
+        //res.status(201).json({ message: 'Utilisateur créé avec succès' });
+        res.redirect('/');
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -34,7 +37,7 @@ router.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ error: 'Mot de passe incorrect' });
         }
-        const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id }, KEY, { expiresIn: '1h' });
         res.cookie('token', token, {
             httpOnly: true, 
             maxAge: 3600000 // 1 heure
