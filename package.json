@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "env-cmd nodemon ./bin/www",
-    "dev": "env-cmd nodemon ./bin/www",
+    "dev": "env-cmd -f .env.dev nodemon ./bin/www",
     "prod": "env-cmd -f .env.prod nodemon ./bin/www"
   },
   "dependencies": {
